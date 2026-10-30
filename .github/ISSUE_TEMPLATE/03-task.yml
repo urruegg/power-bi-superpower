@@ -1,0 +1,48 @@
+name: Plan task
+description: One task from an approved implementation plan (normally created by the pbi-planner agent as a sub-issue).
+title: "T<k>: "
+labels: ["type:task", "phase:build"]
+body:
+  - type: input
+    id: parent
+    attributes:
+      label: Parent feature issue
+      placeholder: "#12"
+    validations:
+      required: true
+  - type: input
+    id: plan
+    attributes:
+      label: Plan file and task number
+      placeholder: docs/superpowers/plans/2026-11-03-12-sales-overview.md - Task T3
+    validations:
+      required: true
+  - type: textarea
+    id: files
+    attributes:
+      label: Files to change
+    validations:
+      required: true
+  - type: textarea
+    id: test
+    attributes:
+      label: Test first
+      description: Test file, test rows and expected values (with source).
+    validations:
+      required: true
+  - type: input
+    id: verify
+    attributes:
+      label: Verification command
+      placeholder: pwsh scripts/quality/Invoke-PbiDaxTests.ps1 -ProjectPath src/SalesStarter -Target Local
+    validations:
+      required: true
+  - type: checkboxes
+    id: dod
+    attributes:
+      label: Definition of done
+      options:
+        - label: Test written first and seen failing
+        - label: Implementation passes the tests
+        - label: "`-Profile commit` gate passes"
+        - label: Evidence pasted in a comment

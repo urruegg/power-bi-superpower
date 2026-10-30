@@ -1,0 +1,24 @@
+{
+  "levels": {
+    "L0": { "name": "Structure and hygiene", "checks": ["RepoHygiene", "PbipStructure", "TmdlConventions", "PbirValidate", "AgentAssets", "McpParity", "SuperpowersManifest"] },
+    "L1": { "name": "Static analysis", "checks": ["ModelBpa", "ReportConventions", "ReportInspector"] },
+    "L2": { "name": "Behaviour (DAX tests)", "checks": ["DaxTests"] },
+    "L3": { "name": "Visual review (attended)", "checks": ["Screenshots"] }
+  },
+  "profiles": {
+    "commit": ["L0"],
+    "pr": ["L0", "L1", "L2"],
+    "deploy-dev": ["L0", "L1"],
+    "deploy-test": ["L0", "L1"],
+    "release": ["L0", "L1", "L2", "L3"]
+  },
+  "deployProfiles": { "DEV": "deploy-dev", "TEST": "deploy-test", "PROD": "deploy-test" },
+  "thresholds": {
+    "bpaMaxErrors": 0,
+    "bpaMaxWarnings": 25,
+    "reportMaxVisualsPerPage": 20,
+    "daxTestMaxDurationMs": 5000
+  },
+  "optionalChecks": ["ReportInspector", "SuperpowersManifest"],
+  "skippedCountsAsFailure": true
+}

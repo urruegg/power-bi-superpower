@@ -1,0 +1,173 @@
+/// Order lines (fact). One row per product per order date. Synthetic data.
+table Sales
+
+	/// Sum of Sales Amount (quantity x unit price).
+	measure 'Total Sales' = SUM(Sales[Sales Amount])
+		formatString: #,##0.00
+		displayFolder: Sales
+
+	/// Sum of quantity sold.
+	measure 'Total Quantity' = SUM(Sales[Quantity])
+		formatString: #,##0
+		displayFolder: Sales
+
+	/// Number of order lines.
+	measure 'Order Lines' = COUNTROWS(Sales)
+		formatString: #,##0
+		displayFolder: Sales
+
+	/// Total Sales divided by Total Quantity.
+	measure 'Average Unit Price' = DIVIDE([Total Sales], [Total Quantity])
+		formatString: #,##0.00
+		displayFolder: Sales
+
+	/// Total Sales from the start of the calendar year to the last date in the filter context.
+	measure 'Sales YTD' = TOTALYTD([Total Sales], 'Date'[Date])
+		formatString: #,##0.00
+		displayFolder: Time intelligence
+
+	/// Total Sales for the same period one year earlier.
+	measure 'Sales PY' = CALCULATE([Total Sales], SAMEPERIODLASTYEAR('Date'[Date]))
+		formatString: #,##0.00
+		displayFolder: Time intelligence
+
+	/// Change of Total Sales against the same period last year. Blank when there are no prior-year sales.
+	measure 'Sales YoY %' =
+			VAR _PriorYear = [Sales PY]
+			RETURN
+			    IF(NOT ISBLANK(_PriorYear), DIVIDE([Total Sales] - _PriorYear, _PriorYear))
+		formatString: 0.0%
+		displayFolder: Time intelligence
+
+	column OrderDate
+		dataType: dateTime
+		isHidden
+		formatString: Short Date
+		summarizeBy: none
+		sourceColumn: OrderDate
+
+	column ProductKey
+		dataType: int64
+		isHidden
+		formatString: 0
+		summarizeBy: none
+		sourceColumn: ProductKey
+
+	column Quantity
+		dataType: int64
+		isHidden
+		formatString: #,##0
+		summarizeBy: sum
+		sourceColumn: Quantity
+
+	column 'Unit Price'
+		dataType: decimal
+		isHidden
+		formatString: #,##0.00
+		summarizeBy: none
+		sourceColumn: Unit Price
+
+	column 'Sales Amount'
+		dataType: decimal
+		isHidden
+		formatString: #,##0.00
+		summarizeBy: sum
+		sourceColumn: Sales Amount
+
+	partition Sales = m
+		mode: import
+		source =
+			let
+			    // Synthetic sample data (walking skeleton). Replace with a parameterised source in Sprint 1.
+			    Source = #table(
+			        type table [OrderDate = date, ProductKey = Int64.Type, Quantity = Int64.Type, #"Unit Price" = Currency.Type],
+			        {
+			            {#date(2025, 1, 3), 1, 1, 1200},
+			            {#date(2025, 1, 10), 3, 4, 90},
+			            {#date(2025, 1, 17), 5, 2, 60},
+			            {#date(2025, 1, 24), 2, 5, 800},
+			            {#date(2025, 2, 3), 2, 3, 800},
+			            {#date(2025, 2, 10), 4, 1, 15},
+			            {#date(2025, 2, 17), 6, 4, 25},
+			            {#date(2025, 2, 24), 3, 2, 90},
+			            {#date(2025, 3, 3), 3, 5, 90},
+			            {#date(2025, 3, 10), 5, 3, 60},
+			            {#date(2025, 3, 17), 1, 1, 1200},
+			            {#date(2025, 3, 24), 4, 4, 15},
+			            {#date(2025, 4, 3), 4, 2, 15},
+			            {#date(2025, 4, 10), 6, 5, 25},
+			            {#date(2025, 4, 17), 2, 3, 800},
+			            {#date(2025, 4, 24), 5, 1, 60},
+			            {#date(2025, 5, 3), 5, 4, 60},
+			            {#date(2025, 5, 10), 1, 2, 1200},
+			            {#date(2025, 5, 17), 3, 5, 90},
+			            {#date(2025, 5, 24), 6, 3, 25},
+			            {#date(2025, 6, 3), 6, 1, 25},
+			            {#date(2025, 6, 10), 2, 4, 800},
+			            {#date(2025, 6, 17), 4, 2, 15},
+			            {#date(2025, 6, 24), 1, 5, 1200},
+			            {#date(2025, 7, 3), 1, 3, 1200},
+			            {#date(2025, 7, 10), 3, 1, 90},
+			            {#date(2025, 7, 17), 5, 4, 60},
+			            {#date(2025, 7, 24), 2, 2, 800},
+			            {#date(2025, 8, 3), 2, 5, 800},
+			            {#date(2025, 8, 10), 4, 3, 15},
+			            {#date(2025, 8, 17), 6, 1, 25},
+			            {#date(2025, 8, 24), 3, 4, 90},
+			            {#date(2025, 9, 3), 3, 2, 90},
+			            {#date(2025, 9, 10), 5, 5, 60},
+			            {#date(2025, 9, 17), 1, 3, 1200},
+			            {#date(2025, 9, 24), 4, 1, 15},
+			            {#date(2025, 10, 3), 4, 4, 15},
+			            {#date(2025, 10, 10), 6, 2, 25},
+			            {#date(2025, 10, 17), 2, 5, 800},
+			            {#date(2025, 10, 24), 5, 3, 60},
+			            {#date(2025, 11, 3), 5, 1, 60},
+			            {#date(2025, 11, 10), 1, 4, 1200},
+			            {#date(2025, 11, 17), 3, 2, 90},
+			            {#date(2025, 11, 24), 6, 5, 25},
+			            {#date(2025, 12, 3), 6, 3, 25},
+			            {#date(2025, 12, 10), 2, 1, 800},
+			            {#date(2025, 12, 17), 4, 4, 15},
+			            {#date(2025, 12, 24), 1, 2, 1200},
+			            {#date(2026, 1, 3), 1, 5, 1200},
+			            {#date(2026, 1, 10), 3, 3, 90},
+			            {#date(2026, 1, 17), 5, 1, 60},
+			            {#date(2026, 1, 24), 2, 4, 800},
+			            {#date(2026, 2, 3), 2, 2, 800},
+			            {#date(2026, 2, 10), 4, 5, 15},
+			            {#date(2026, 2, 17), 6, 3, 25},
+			            {#date(2026, 2, 24), 3, 1, 90},
+			            {#date(2026, 3, 3), 3, 4, 90},
+			            {#date(2026, 3, 10), 5, 2, 60},
+			            {#date(2026, 3, 17), 1, 5, 1200},
+			            {#date(2026, 3, 24), 4, 3, 15},
+			            {#date(2026, 4, 3), 4, 1, 15},
+			            {#date(2026, 4, 10), 6, 4, 25},
+			            {#date(2026, 4, 17), 2, 2, 800},
+			            {#date(2026, 4, 24), 5, 5, 60},
+			            {#date(2026, 5, 3), 5, 3, 60},
+			            {#date(2026, 5, 10), 1, 1, 1200},
+			            {#date(2026, 5, 17), 3, 4, 90},
+			            {#date(2026, 5, 24), 6, 2, 25},
+			            {#date(2026, 6, 3), 6, 5, 25},
+			            {#date(2026, 6, 10), 2, 3, 800},
+			            {#date(2026, 6, 17), 4, 1, 15},
+			            {#date(2026, 6, 24), 1, 4, 1200},
+			            {#date(2026, 7, 3), 1, 2, 1200},
+			            {#date(2026, 7, 10), 3, 5, 90},
+			            {#date(2026, 7, 17), 5, 3, 60},
+			            {#date(2026, 7, 24), 2, 1, 800},
+			            {#date(2026, 8, 3), 2, 4, 800},
+			            {#date(2026, 8, 10), 4, 2, 15},
+			            {#date(2026, 8, 17), 6, 5, 25},
+			            {#date(2026, 8, 24), 3, 3, 90},
+			            {#date(2026, 9, 3), 3, 1, 90},
+			            {#date(2026, 9, 10), 5, 4, 60},
+			            {#date(2026, 9, 17), 1, 2, 1200},
+			            {#date(2026, 9, 24), 4, 5, 15}
+			        }
+			    ),
+			    #"Added Sales Amount" = Table.AddColumn(Source, "Sales Amount", each [Quantity] * [Unit Price], Currency.Type)
+			in
+			    #"Added Sales Amount"

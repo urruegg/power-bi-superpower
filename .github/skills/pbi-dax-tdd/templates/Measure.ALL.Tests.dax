@@ -1,0 +1,20 @@
+// Tests for <Area>. Expected values: independent source named per block.
+// Optional directives (first lines only): // @role: <RoleName>   // @effectiveUserName: <user@contoso.com>
+DEFINE
+	// Source: <spec §9 / source report / reconciliation sheet>
+	VAR _Tests =
+		UNION (
+			ROW (
+				"TestName", "<Measure> overall equals <value>",
+				"ExpectedValue", 0,
+				"ActualValue", ROUND ( [<Measure>], 2 )
+			),
+			ROW (
+				"TestName", "<Measure> for <slice> equals <value>",
+				"ExpectedValue", 0,
+				"ActualValue", ROUND ( CALCULATE ( [<Measure>], '<Table>'[<Column>] = "<Value>" ), 2 )
+			)
+		)
+
+EVALUATE
+ADDCOLUMNS ( _Tests, "Passed", [ExpectedValue] = [ActualValue] )

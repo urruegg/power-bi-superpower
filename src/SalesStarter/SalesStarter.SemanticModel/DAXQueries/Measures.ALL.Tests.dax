@@ -1,0 +1,20 @@
+// SalesStarter measure tests (John Kerski DAX Query View testing pattern).
+// Source of expected values: hand calculation from the synthetic rows in tables/Sales.tmdl (see src/SalesStarter/README.md).
+DEFINE
+	VAR _Tests =
+		UNION (
+			ROW ( "TestName", "Order Lines equals 84", "ExpectedValue", 84, "ActualValue", [Order Lines] ),
+			ROW ( "TestName", "Total Quantity equals 252", "ExpectedValue", 252, "ActualValue", [Total Quantity] ),
+			ROW ( "TestName", "Total Sales equals 91445.00", "ExpectedValue", 91445.00, "ActualValue", ROUND ( [Total Sales], 2 ) ),
+			ROW ( "TestName", "Total Sales for Bikes equals 83200.00", "ExpectedValue", 83200.00, "ActualValue", ROUND ( CALCULATE ( [Total Sales], 'Product'[Category] = "Bikes" ), 2 ) ),
+			ROW ( "TestName", "Total Quantity for Clothing equals 84", "ExpectedValue", 84, "ActualValue", CALCULATE ( [Total Quantity], 'Product'[Category] = "Clothing" ) ),
+			ROW ( "TestName", "Average Unit Price equals 362.88", "ExpectedValue", 362.88, "ActualValue", ROUND ( [Average Unit Price], 2 ) ),
+			ROW ( "TestName", "Total Sales 2025 equals 52145.00", "ExpectedValue", 52145.00, "ActualValue", ROUND ( CALCULATE ( [Total Sales], 'Date'[Year] = 2025 ), 2 ) ),
+			ROW ( "TestName", "Sales YTD at 2026-06 equals 29040.00", "ExpectedValue", 29040.00, "ActualValue", ROUND ( CALCULATE ( [Sales YTD], 'Date'[Year Month] = "2026-06" ), 2 ) ),
+			ROW ( "TestName", "Sales PY at 2026-03 equals Total Sales 2025-03 (1890.00)", "ExpectedValue", 1890.00, "ActualValue", ROUND ( CALCULATE ( [Sales PY], 'Date'[Year Month] = "2026-03" ), 2 ) ),
+			ROW ( "TestName", "Sales YoY % at 2026-03 equals 2.4524", "ExpectedValue", 2.4524, "ActualValue", ROUND ( CALCULATE ( [Sales YoY %], 'Date'[Year Month] = "2026-03" ), 4 ) ),
+			ROW ( "TestName", "Sales YoY % is blank when there is no prior year (2025-05 shows 1 = blank)", "ExpectedValue", 1, "ActualValue", IF ( ISBLANK ( CALCULATE ( [Sales YoY %], 'Date'[Year Month] = "2025-05" ) ), 1, 0 ) )
+		)
+
+EVALUATE
+ADDCOLUMNS ( _Tests, "Passed", ABS ( [ExpectedValue] - [ActualValue] ) < 0.0001 )

@@ -1,0 +1,46 @@
+name: Release
+description: Promotion of merged changes to PROD. Prepared by the release manager agent, approved and executed by a human.
+title: "Release: "
+labels: ["type:release", "phase:deploy"]
+body:
+  - type: input
+    id: version
+    attributes:
+      label: Version / commit
+      placeholder: v0.2.0 - <short sha on main>
+    validations:
+      required: true
+  - type: textarea
+    id: prs
+    attributes:
+      label: Included pull requests
+    validations:
+      required: true
+  - type: textarea
+    id: test
+    attributes:
+      label: TEST evidence (masked summary)
+    validations:
+      required: true
+  - type: textarea
+    id: notes
+    attributes:
+      label: Release notes
+  - type: textarea
+    id: service
+    attributes:
+      label: Human service actions after deployment
+      description: RLS membership, credentials, refresh schedule, app audience, sensitivity label.
+  - type: textarea
+    id: rollback
+    attributes:
+      label: Rollback plan
+      value: Redeploy the previous release commit to TEST, verify, then run the PROD procedure with that commit.
+  - type: checkboxes
+    id: approver
+    attributes:
+      label: Release approver checklist (human)
+      options:
+        - label: TEST evidence is for the same commit as this release
+        - label: Release notes reviewed
+        - label: I will apply gate:release-approved and run the PROD command myself

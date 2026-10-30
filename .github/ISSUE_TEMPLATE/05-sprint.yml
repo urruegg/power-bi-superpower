@@ -1,0 +1,31 @@
+name: Sprint tracking
+description: Tracking issue for one sprint (normally created by scripts/sprint/New-PbiSprint.ps1).
+title: "Sprint NN: <goal>"
+labels: ["type:sprint"]
+body:
+  - type: input
+    id: goal
+    attributes:
+      label: Sprint goal
+    validations:
+      required: true
+  - type: input
+    id: dates
+    attributes:
+      label: Dates
+      placeholder: 2026-11-02 to 2026-11-13
+    validations:
+      required: true
+  - type: input
+    id: capacity
+    attributes:
+      label: Capacity (person-days)
+  - type: textarea
+    id: scope
+    attributes:
+      label: Committed issues
+      description: One per line, "#<n> <title>".
+  - type: textarea
+    id: risks
+    attributes:
+      label: Risks and dependencies

@@ -1,0 +1,38 @@
+name: Bug
+description: Something in a report, model, refresh or script does not work as specified.
+title: "Bug: "
+labels: ["type:bug", "phase:intake"]
+body:
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: What should happen (with the source of the expected value)
+    validations:
+      required: true
+  - type: dropdown
+    id: env
+    attributes:
+      label: Where
+      options: ["Power BI Desktop", "DEV", "TEST", "PROD", "Script / tooling"]
+    validations:
+      required: true
+  - type: input
+    id: location
+    attributes:
+      label: Project, page, visual or script
+      placeholder: src/SalesStarter - page Overview - visual "Sales by month"
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Evidence
+      description: Error text or masked evidence summary. No personal data, IDs or credentials.

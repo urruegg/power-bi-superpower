@@ -1,0 +1,22 @@
+/// Deployment metadata used by smoke tests (environment name, model version).
+table About
+	isHidden
+
+	column Environment
+		dataType: string
+		summarizeBy: none
+		sourceColumn: Environment
+
+	column 'Model Version'
+		dataType: string
+		summarizeBy: none
+		sourceColumn: Model Version
+
+	partition About = m
+		mode: import
+		source =
+			let
+			    // Environment comes from the Environment parameter (expressions.tmdl), set per environment at deployment.
+			    Source = #table(type table [Environment = text, #"Model Version" = text], {{Environment, "0.1.0"}})
+			in
+			    Source

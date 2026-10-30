@@ -1,0 +1,49 @@
+/// Calendar (marked date table), contiguous from 2025-01-01 to 2026-12-31.
+table Date
+	dataCategory: Time
+
+	column Date
+		dataType: dateTime
+		isKey
+		formatString: Short Date
+		summarizeBy: none
+		sourceColumn: Date
+
+	column Year
+		dataType: int64
+		formatString: 0
+		summarizeBy: none
+		sourceColumn: Year
+
+	column 'Month Number'
+		dataType: int64
+		isHidden
+		formatString: 0
+		summarizeBy: none
+		sourceColumn: Month Number
+
+	column Month
+		dataType: string
+		summarizeBy: none
+		sourceColumn: Month
+		sortByColumn: 'Month Number'
+
+	column 'Year Month'
+		dataType: string
+		summarizeBy: none
+		sourceColumn: Year Month
+
+	partition Date = m
+		mode: import
+		source =
+			let
+			    StartDate = #date(2025, 1, 1),
+			    EndDate = #date(2026, 12, 31),
+			    Dates = List.Dates(StartDate, Duration.Days(EndDate - StartDate) + 1, #duration(1, 0, 0, 0)),
+			    #"Converted to Table" = Table.FromList(Dates, Splitter.SplitByNothing(), type table [Date = date]),
+			    #"Added Year" = Table.AddColumn(#"Converted to Table", "Year", each Date.Year([Date]), Int64.Type),
+			    #"Added Month Number" = Table.AddColumn(#"Added Year", "Month Number", each Date.Month([Date]), Int64.Type),
+			    #"Added Month" = Table.AddColumn(#"Added Month Number", "Month", each Date.ToText([Date], [Format = "MMM", Culture = "en-US"]), type text),
+			    #"Added Year Month" = Table.AddColumn(#"Added Month", "Year Month", each Date.ToText([Date], [Format = "yyyy-MM", Culture = "en-US"]), type text)
+			in
+			    #"Added Year Month"

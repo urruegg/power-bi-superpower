@@ -1,0 +1,39 @@
+name: Feature or change request
+description: A specified change to an existing report or model (new page, KPI, filter, performance or usability improvement).
+title: "Feature: "
+labels: ["type:feature", "phase:spec"]
+body:
+  - type: input
+    id: project
+    attributes:
+      label: Project
+      description: Folder under src/ (for example src/SalesStarter)
+    validations:
+      required: true
+  - type: textarea
+    id: story
+    attributes:
+      label: User story
+      placeholder: As a <role> I want <capability> so that <outcome>.
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Acceptance criteria
+      description: Given / when / then, with example values and their source (they become DAX tests).
+    validations:
+      required: true
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      multiple: true
+      options: ["Semantic model", "Report", "Data / refresh", "Security / RLS", "Infrastructure"]
+    validations:
+      required: true
+  - type: input
+    id: idea
+    attributes:
+      label: Related idea issue
+      placeholder: "#12"

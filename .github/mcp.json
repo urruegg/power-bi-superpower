@@ -1,0 +1,27 @@
+{
+  "mcpServers": {
+    "powerbi-modeling-mcp": {
+      "type": "local",
+      "command": "npx",
+      "args": ["-y", "@microsoft/powerbi-modeling-mcp@latest", "--start"],
+      "tools": ["*"]
+    },
+    "fabric-mcp": {
+      "type": "local",
+      "command": "npx",
+      "args": ["-y", "@microsoft/fabric-mcp@latest", "server", "start", "--mode", "all"],
+      "tools": ["*"]
+    },
+    "microsoft-learn": {
+      "type": "http",
+      "url": "https://learn.microsoft.com/api/mcp",
+      "tools": ["*"]
+    },
+    "playwright": {
+      "type": "local",
+      "command": "npx",
+      "args": ["-y", "@playwright/mcp@latest", "--browser", "msedge"],
+      "tools": ["*"]
+    }
+  }
+}

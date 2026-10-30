@@ -1,0 +1,11 @@
+// __MODEL_NAME__ model integrity tests. Extend with fact-to-dimension checks when facts are added.
+// Source: date range defined in tables/Date.tmdl (2025-01-01 to 2026-12-31 = 730 days).
+DEFINE
+	VAR _Tests =
+		UNION (
+			ROW ( "TestName", "Date table has 730 contiguous days", "ExpectedValue", 730, "ActualValue", COUNTROWS ( 'Date' ) ),
+			ROW ( "TestName", "Date table has no gaps (max - min + 1 = rows)", "ExpectedValue", 730, "ActualValue", INT ( MAX ( 'Date'[Date] ) - MIN ( 'Date'[Date] ) ) + 1 )
+		)
+
+EVALUATE
+ADDCOLUMNS ( _Tests, "Passed", [ExpectedValue] = [ActualValue] )

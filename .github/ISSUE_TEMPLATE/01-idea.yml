@@ -1,0 +1,65 @@
+name: Report or dashboard idea
+description: Propose a new Power BI report, dashboard, page or KPI. An agent asks follow-up questions and scores it; the product owner decides.
+title: "Idea: "
+labels: ["type:idea", "phase:intake"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Describe the decision you want to support, not the chart you imagine. Do **not** include personal data, credentials or confidential figures.
+  - type: textarea
+    id: problem
+    attributes:
+      label: Decision or problem
+      description: Which decision or action should this support? What is hard or slow today?
+    validations:
+      required: true
+  - type: input
+    id: audience
+    attributes:
+      label: Audience and frequency
+      placeholder: "Regional sales managers, weekly pipeline review"
+    validations:
+      required: true
+  - type: textarea
+    id: kpis
+    attributes:
+      label: KPIs (draft)
+      description: One per line - name, plain-language definition, and an example value you trust (with its source).
+      placeholder: |
+        Net revenue - invoiced amount minus credit notes, excl. VAT - CHF 1.2m in Sep 2026 (finance monthly report)
+  - type: textarea
+    id: data
+    attributes:
+      label: Data sources
+      description: Systems, data owners, how fresh the data must be. Is it already in Fabric / OneLake?
+  - type: dropdown
+    id: sensitivity
+    attributes:
+      label: Data sensitivity
+      options: ["Public", "Internal", "Confidential", "Highly confidential"]
+    validations:
+      required: true
+  - type: dropdown
+    id: rls
+    attributes:
+      label: Do different users need to see different rows?
+      options: ["No", "Yes", "Not sure"]
+    validations:
+      required: true
+  - type: input
+    id: deadline
+    attributes:
+      label: Deadline or driving event
+  - type: textarea
+    id: today
+    attributes:
+      label: What exists today
+      description: Excel files, existing reports, links (no personal data).
+  - type: checkboxes
+    id: confirm
+    attributes:
+      label: Confirmation
+      options:
+        - label: This issue contains no personal data, credentials or confidential figures.
+          required: true

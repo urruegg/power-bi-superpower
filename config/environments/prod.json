@@ -1,0 +1,56 @@
+{
+  "name": "PROD",
+  "description": "Production. Human-only: deployed by the release approver from main, after TEST evidence for the same commit and the gate:release-approved label on the release issue.",
+  "workspace": {
+    "displayName": "Power BI Superpower",
+    "description": "Production workspace for the power-bi-superpower repository. Changed only through the release procedure in docs/runbooks/deploy.md.",
+    "capacityName": "${env:PBI_CAPACITY_NAME}",
+    "roleAssignments": [
+      {
+        "principalId": "${env:PBI_PROD_ADMIN_GROUP_ID}",
+        "principalType": "Group",
+        "role": "Admin"
+      },
+      {
+        "principalId": "${env:PBI_PROD_VIEWER_GROUP_ID}",
+        "principalType": "Group",
+        "role": "Viewer",
+        "optional": true
+      }
+    ]
+  },
+  "guards": {
+    "allowedBranches": [
+      "main"
+    ],
+    "requireCleanWorkingTree": true,
+    "requireMergedToMain": true,
+    "requireTestEvidence": true,
+    "requireReleaseApproval": true,
+    "humanOnly": true
+  },
+  "projects": [
+    {
+      "path": "src/SalesStarter",
+      "semanticModel": {
+        "folder": "SalesStarter.SemanticModel",
+        "displayName": "SalesStarter",
+        "description": "Walking-skeleton semantic model with inline sample data.",
+        "parameters": {
+          "Environment": "PROD"
+        },
+        "refreshAfterDeploy": true
+      },
+      "reports": [
+        {
+          "folder": "SalesStarter.Report",
+          "displayName": "SalesStarter",
+          "description": "Walking-skeleton report."
+        }
+      ]
+    }
+  ],
+  "postDeploy": {
+    "runDaxTests": true
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "name": "__MODEL_NAME__",
+  "page": { "displayName": "Overview" },
+  "grid": { "columns": 12, "rows": 8 },
+  "visuals": [
+    {
+      "id": "yearSlicer",
+      "kind": "slicer",
+      "title": "Year",
+      "altText": "Slicer to filter the page by calendar year.",
+      "columns": [ { "table": "Date", "column": "Year" } ],
+      "layout": { "col": 0, "row": 0, "colSpan": 3, "rowSpan": 2 }
+    }
+  ]
+}

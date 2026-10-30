@@ -1,0 +1,37 @@
+/// Products sold (dimension). Synthetic data.
+table Product
+
+	column ProductKey
+		dataType: int64
+		isHidden
+		formatString: 0
+		summarizeBy: none
+		sourceColumn: ProductKey
+
+	column Product
+		dataType: string
+		summarizeBy: none
+		sourceColumn: Product
+
+	column Category
+		dataType: string
+		summarizeBy: none
+		sourceColumn: Category
+
+	partition Product = m
+		mode: import
+		source =
+			let
+			    Source = #table(
+			        type table [ProductKey = Int64.Type, Product = text, Category = text],
+			        {
+			            {1, "Trail Bike", "Bikes"},
+			            {2, "City Bike", "Bikes"},
+			            {3, "Helmet", "Accessories"},
+			            {4, "Bottle", "Accessories"},
+			            {5, "Jersey", "Clothing"},
+			            {6, "Gloves", "Clothing"}
+			        }
+			    )
+			in
+			    Source
