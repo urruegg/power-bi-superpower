@@ -1,0 +1,62 @@
+{
+  "name": "SalesStarter",
+  "page": { "displayName": "Overview" },
+  "grid": { "columns": 12, "rows": 8 },
+  "visuals": [
+    {
+      "id": "kpis",
+      "kind": "card",
+      "title": "Key figures",
+      "altText": "Total sales, change against last year, quantity sold and average unit price for the current selection.",
+      "measures": [
+        { "table": "Sales", "measure": "Total Sales" },
+        { "table": "Sales", "measure": "Sales YoY %" },
+        { "table": "Sales", "measure": "Total Quantity" },
+        { "table": "Sales", "measure": "Average Unit Price" }
+      ],
+      "layout": { "col": 0, "row": 0, "colSpan": 12, "rowSpan": 2 }
+    },
+    {
+      "id": "salesByMonth",
+      "kind": "columnChart",
+      "title": "Sales by month",
+      "altText": "Column chart of total sales for each month, oldest month on the left.",
+      "category": [ { "table": "Date", "column": "Year Month" } ],
+      "measures": [ { "table": "Sales", "measure": "Total Sales" } ],
+      "sort": "category-asc",
+      "layout": { "col": 0, "row": 2, "colSpan": 8, "rowSpan": 3 }
+    },
+    {
+      "id": "salesByCategory",
+      "kind": "barChart",
+      "title": "Sales by category",
+      "altText": "Bar chart of total sales per product category.",
+      "category": [ { "table": "Product", "column": "Category" } ],
+      "measures": [ { "table": "Sales", "measure": "Total Sales" } ],
+      "layout": { "col": 8, "row": 2, "colSpan": 4, "rowSpan": 3 }
+    },
+    {
+      "id": "productDetail",
+      "kind": "table",
+      "title": "Products",
+      "altText": "Table of product categories and products with quantity and total sales.",
+      "columns": [
+        { "table": "Product", "column": "Category" },
+        { "table": "Product", "column": "Product" }
+      ],
+      "measures": [
+        { "table": "Sales", "measure": "Total Quantity" },
+        { "table": "Sales", "measure": "Total Sales" }
+      ],
+      "layout": { "col": 0, "row": 5, "colSpan": 8, "rowSpan": 3 }
+    },
+    {
+      "id": "yearSlicer",
+      "kind": "slicer",
+      "title": "Year",
+      "altText": "Slicer to filter the page by calendar year.",
+      "columns": [ { "table": "Date", "column": "Year" } ],
+      "layout": { "col": 8, "row": 5, "colSpan": 4, "rowSpan": 3 }
+    }
+  ]
+}

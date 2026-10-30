@@ -1,0 +1,68 @@
+[
+  {
+    "ID": "REPO_MEASURE_FORMAT_STRING",
+    "Name": "[Repo] Measures must have a format string",
+    "Category": "Formatting",
+    "Description": "Every visible number needs an explicit format. Add formatString to the measure (TMDL) or set it with the Modeling MCP server.",
+    "Severity": 3,
+    "Scope": "Measure",
+    "Expression": "string.IsNullOrWhitespace(FormatString)",
+    "FixExpression": null,
+    "CompatibilityLevel": 1200
+  },
+  {
+    "ID": "REPO_MEASURE_DESCRIPTION",
+    "Name": "[Repo] Measures must have a description",
+    "Category": "Maintenance",
+    "Description": "Describe the business definition of every measure with a /// line above it in TMDL. Copilot and report users rely on it.",
+    "Severity": 2,
+    "Scope": "Measure",
+    "Expression": "string.IsNullOrWhitespace(Description)",
+    "FixExpression": null,
+    "CompatibilityLevel": 1200
+  },
+  {
+    "ID": "REPO_MEASURE_DISPLAY_FOLDER",
+    "Name": "[Repo] Measures should be in a display folder",
+    "Category": "Maintenance",
+    "Description": "Group measures by subject with displayFolder so the field list stays navigable.",
+    "Severity": 1,
+    "Scope": "Measure",
+    "Expression": "string.IsNullOrWhitespace(DisplayFolder)",
+    "FixExpression": null,
+    "CompatibilityLevel": 1200
+  },
+  {
+    "ID": "REPO_TABLE_DESCRIPTION",
+    "Name": "[Repo] Visible tables should have a description",
+    "Category": "Maintenance",
+    "Description": "Describe what one row of the table represents (grain).",
+    "Severity": 1,
+    "Scope": "Table",
+    "Expression": "IsHidden == false and string.IsNullOrWhitespace(Description)",
+    "FixExpression": null,
+    "CompatibilityLevel": 1200
+  },
+  {
+    "ID": "REPO_NAME_WHITESPACE",
+    "Name": "[Repo] Object names must not start or end with spaces",
+    "Category": "Naming Conventions",
+    "Description": "Leading or trailing spaces break DAX references and report bindings.",
+    "Severity": 3,
+    "Scope": "Table, Measure, DataColumn, CalculatedColumn, CalculatedTableColumn, Hierarchy",
+    "Expression": "Name != Name.Trim()",
+    "FixExpression": null,
+    "CompatibilityLevel": 1200
+  },
+  {
+    "ID": "REPO_MARKED_DATE_TABLE",
+    "Name": "[Repo] The model must have a marked date table",
+    "Category": "Model Layout",
+    "Description": "Time intelligence needs one table with dataCategory Time and a key Date column.",
+    "Severity": 2,
+    "Scope": "Model",
+    "Expression": "not Tables.Any(DataCategory == \"Time\" and Columns.Any(IsKey == true))",
+    "FixExpression": null,
+    "CompatibilityLevel": 1200
+  }
+]

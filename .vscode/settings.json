@@ -1,0 +1,25 @@
+{
+  "chat.useAgentsMdFile": true,
+  "chat.useNestedAgentsMdFiles": false,
+  "files.encoding": "utf8",
+  "files.insertFinalNewline": true,
+  "files.associations": {
+    "*.tmdl": "tmdl",
+    "*.dax": "dax",
+    "*.pbir": "json",
+    "*.pbism": "json",
+    "*.pbip": "json",
+    ".platform": "json"
+  },
+  "files.exclude": {
+    "tools/.bin": true
+  },
+  "search.exclude": {
+    "tools/.bin": true,
+    ".evidence": true,
+    "**/.pbi": true
+  },
+  "powershell.codeFormatting.preset": "OTBS",
+  "[powershell]": { "editor.tabSize": 4 },
+  "[json]": { "editor.tabSize": 2 }
+}

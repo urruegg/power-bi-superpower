@@ -1,0 +1,8 @@
+#!/bin/sh
+# Fast commit gate: repository hygiene (secrets, identifiers, local files) and agent asset lint.
+# Enabled by: git config core.hooksPath .githooks (scripts/bootstrap/Initialize-PbiSuperpower.ps1 does this).
+if ! command -v pwsh >/dev/null 2>&1; then
+    echo "[pbi] pre-commit: PowerShell 7 (pwsh) is required. Install it (winget install --id Microsoft.PowerShell) or run scripts/bootstrap/Test-Prerequisites.ps1." >&2
+    exit 1
+fi
+exec pwsh -NoProfile -NonInteractive -ExecutionPolicy Bypass -File scripts/quality/Invoke-PbiQualityGate.ps1 -Profile commit -Check RepoHygiene,AgentAssets -NoEvidence

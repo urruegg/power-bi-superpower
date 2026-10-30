@@ -1,0 +1,13 @@
+// SalesStarter model integrity tests.
+// Source: date range defined in tables/Date.tmdl (2025-01-01 to 2026-12-31 = 730 days); product keys in tables/Product.tmdl.
+DEFINE
+	VAR _Tests =
+		UNION (
+			ROW ( "TestName", "Date table has 730 contiguous days", "ExpectedValue", 730, "ActualValue", COUNTROWS ( 'Date' ) ),
+			ROW ( "TestName", "Date table has no gaps (max - min + 1 = rows)", "ExpectedValue", 730, "ActualValue", INT ( MAX ( 'Date'[Date] ) - MIN ( 'Date'[Date] ) ) + 1 ),
+			ROW ( "TestName", "Every sales row has a product", "ExpectedValue", 0, "ActualValue", COUNTROWS ( FILTER ( Sales, ISBLANK ( RELATED ( 'Product'[Product] ) ) ) ) + 0 ),
+			ROW ( "TestName", "Every sales row has a date", "ExpectedValue", 0, "ActualValue", COUNTROWS ( FILTER ( Sales, ISBLANK ( RELATED ( 'Date'[Date] ) ) ) ) + 0 )
+		)
+
+EVALUATE
+ADDCOLUMNS ( _Tests, "Passed", [ExpectedValue] = [ActualValue] )

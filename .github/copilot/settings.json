@@ -1,0 +1,17 @@
+{
+  "companyAnnouncements": [
+    "Power BI Superpower: start with the pbi-sprint-flow skill. gate:* labels and PROD deployments are human-only."
+  ],
+  "extraKnownMarketplaces": {
+    "superpowers-marketplace": {
+      "source": { "source": "github", "repo": "obra/superpowers-marketplace" }
+    },
+    "fabric-collection": {
+      "source": { "source": "github", "repo": "microsoft/skills-for-fabric" }
+    }
+  },
+  "enabledPlugins": {
+    "superpowers@superpowers-marketplace": true,
+    "powerbi-authoring@fabric-collection": true
+  }
+}

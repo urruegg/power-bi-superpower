@@ -1,0 +1,4 @@
+database __MODEL_NAME__
+	compatibilityLevel: 1702
+	compatibilityMode: powerBI
+	language: 1033

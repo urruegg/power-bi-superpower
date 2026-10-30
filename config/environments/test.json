@@ -1,0 +1,56 @@
+{
+  "name": "TEST",
+  "description": "Integration and user acceptance. Deployed only from main after the pull request is merged.",
+  "workspace": {
+    "displayName": "Power BI Superpower [TEST]",
+    "description": "TEST workspace for the power-bi-superpower repository. Deployed from main only. Do not edit items in the service.",
+    "capacityName": "${env:PBI_CAPACITY_NAME}",
+    "roleAssignments": [
+      {
+        "principalId": "${env:PBI_TEST_ADMIN_GROUP_ID}",
+        "principalType": "Group",
+        "role": "Admin"
+      },
+      {
+        "principalId": "${env:PBI_TEST_VIEWER_GROUP_ID}",
+        "principalType": "Group",
+        "role": "Viewer",
+        "optional": true
+      }
+    ]
+  },
+  "guards": {
+    "allowedBranches": [
+      "main"
+    ],
+    "requireCleanWorkingTree": true,
+    "requireMergedToMain": true,
+    "requireTestEvidence": false,
+    "requireReleaseApproval": false,
+    "humanOnly": false
+  },
+  "projects": [
+    {
+      "path": "src/SalesStarter",
+      "semanticModel": {
+        "folder": "SalesStarter.SemanticModel",
+        "displayName": "SalesStarter",
+        "description": "Walking-skeleton semantic model with inline sample data.",
+        "parameters": {
+          "Environment": "TEST"
+        },
+        "refreshAfterDeploy": true
+      },
+      "reports": [
+        {
+          "folder": "SalesStarter.Report",
+          "displayName": "SalesStarter",
+          "description": "Walking-skeleton report."
+        }
+      ]
+    }
+  ],
+  "postDeploy": {
+    "runDaxTests": true
+  }
+}

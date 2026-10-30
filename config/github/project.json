@@ -1,0 +1,8 @@
+{
+  "title": "Power BI Superpower",
+  "fields": [
+    { "name": "Phase", "dataType": "SINGLE_SELECT", "options": ["Intake", "Spec", "Plan", "Build", "Test", "Review", "Deploy", "Done"] },
+    { "name": "Priority", "dataType": "SINGLE_SELECT", "options": ["P1", "P2", "P3"] },
+    { "name": "Size", "dataType": "SINGLE_SELECT", "options": ["XS", "S", "M", "L"] }
+  ]
+}

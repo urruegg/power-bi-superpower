@@ -1,0 +1,23 @@
+{
+  "version": 1,
+  "hooks": {
+    "sessionStart": [
+      {
+        "type": "command",
+        "powershell": "pwsh -NoProfile -NonInteractive -ExecutionPolicy Bypass -File ./scripts/hooks/Invoke-SessionStart.ps1; exit 0",
+        "bash": "pwsh -NoProfile -NonInteractive -ExecutionPolicy Bypass -File ./scripts/hooks/Invoke-SessionStart.ps1 || true",
+        "cwd": ".",
+        "timeoutSec": 15
+      }
+    ],
+    "preToolUse": [
+      {
+        "type": "command",
+        "powershell": "pwsh -NoProfile -NonInteractive -ExecutionPolicy Bypass -File ./scripts/hooks/Test-PreToolUse.ps1; exit 0",
+        "bash": "pwsh -NoProfile -NonInteractive -ExecutionPolicy Bypass -File ./scripts/hooks/Test-PreToolUse.ps1 || true",
+        "cwd": ".",
+        "timeoutSec": 10
+      }
+    ]
+  }
+}

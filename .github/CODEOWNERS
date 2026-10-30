@@ -1,0 +1,7 @@
+# Replace @urruegg with your GitHub user or team (for example @org/bi-leads).
+*                                   @urruegg
+/config/                            @urruegg
+/scripts/                           @urruegg
+/.github/                           @urruegg
+/AGENTS.md                          @urruegg
+/src/**/definition/roles/           @urruegg

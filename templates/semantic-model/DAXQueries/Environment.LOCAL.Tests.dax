@@ -1,0 +1,8 @@
+// Smoke test: the Environment parameter was set for LOCAL (expressions.tmdl default is "Local"; deployment sets DEV/TEST/PROD).
+EVALUATE
+ROW (
+	"TestName", "Environment parameter is Local",
+	"ExpectedValue", "Local",
+	"ActualValue", SELECTEDVALUE ( 'About'[Environment] ),
+	"Passed", SELECTEDVALUE ( 'About'[Environment] ) = "Local"
+)

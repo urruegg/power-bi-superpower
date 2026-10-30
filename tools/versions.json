@@ -1,0 +1,30 @@
+{
+  "superpowers": { "repo": "https://github.com/obra/superpowers", "ref": "v7.0.1" },
+  "plugins": [
+    { "name": "superpowers", "marketplace": "superpowers-marketplace", "marketplaceRepo": "obra/superpowers-marketplace", "optional": false },
+    { "name": "powerbi-authoring", "marketplace": "fabric-collection", "marketplaceRepo": "microsoft/skills-for-fabric", "optional": false },
+    { "name": "power-bi-development", "marketplace": "awesome-copilot", "marketplaceRepo": "github/awesome-copilot", "optional": true }
+  ],
+  "npm": {
+    "globalCli": {
+      "@microsoft/powerbi-report-authoring-cli": "latest",
+      "@microsoft/powerbi-desktop-bridge-cli": "latest"
+    }
+  },
+  "psModules": [
+    { "name": "Az.Accounts", "minimumVersion": "5.0.0", "optional": false },
+    { "name": "Pester", "minimumVersion": "5.5.0", "optional": false },
+    { "name": "Az.Fabric", "minimumVersion": "1.0.0", "optional": true }
+  ],
+  "tabularEditor2": {
+    "version": "2.29.0",
+    "url": "https://github.com/TabularEditor/TabularEditor/releases/download/2.29.0/TabularEditor.Portable.zip",
+    "modelArgument": "databaseFile"
+  },
+  "bpaRules": {
+    "enabled": true,
+    "url": "https://raw.githubusercontent.com/microsoft/Analysis-Services/master/BestPracticeRules/BPARules.json"
+  },
+  "adomd": { "package": "Microsoft.AnalysisServices.AdomdClient.NetCore.retail.amd64", "version": "19.84.1" },
+  "fabInspector": { "version": "3.4.0", "url": "" }
+}

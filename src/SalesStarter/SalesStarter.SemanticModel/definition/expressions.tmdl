@@ -1,0 +1,2 @@
+/// Deployment environment. Set per environment by scripts/deploy/Deploy-PbiProject.ps1 (config/environments/*.json).
+expression Environment = "Local" meta [IsParameterQuery=true, Type="Text", IsParameterQueryRequired=true]

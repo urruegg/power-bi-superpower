@@ -1,0 +1,7 @@
+relationship 'Sales to Date'
+	fromColumn: Sales.OrderDate
+	toColumn: Date.Date
+
+relationship 'Sales to Product'
+	fromColumn: Sales.ProductKey
+	toColumn: Product.ProductKey

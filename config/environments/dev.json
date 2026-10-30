@@ -1,0 +1,37 @@
+{
+  "name": "DEV",
+  "description": "Development. Developers and agents deploy feature branches here to try changes against the service.",
+  "workspace": {
+    "displayName": "Power BI Superpower [DEV]",
+    "description": "DEV workspace for the power-bi-superpower repository. Content is deployed from Git by scripts/deploy/Deploy-PbiProject.ps1. Do not edit items in the service.",
+    "capacityName": "${env:PBI_CAPACITY_NAME}",
+    "roleAssignments": [
+      { "principalId": "${env:PBI_DEV_ADMIN_GROUP_ID}", "principalType": "Group", "role": "Admin" },
+      { "principalId": "${env:PBI_DEV_MEMBER_GROUP_ID}", "principalType": "Group", "role": "Contributor", "optional": true }
+    ]
+  },
+  "guards": {
+    "allowedBranches": ["*"],
+    "requireCleanWorkingTree": false,
+    "requireMergedToMain": false,
+    "requireTestEvidence": false,
+    "requireReleaseApproval": false,
+    "humanOnly": false
+  },
+  "projects": [
+    {
+      "path": "src/SalesStarter",
+      "semanticModel": {
+        "folder": "SalesStarter.SemanticModel",
+        "displayName": "SalesStarter",
+        "description": "Walking-skeleton semantic model with inline sample data.",
+        "parameters": { "Environment": "DEV" },
+        "refreshAfterDeploy": true
+      },
+      "reports": [
+        { "folder": "SalesStarter.Report", "displayName": "SalesStarter", "description": "Walking-skeleton report." }
+      ]
+    }
+  ],
+  "postDeploy": { "runDaxTests": true }
+}

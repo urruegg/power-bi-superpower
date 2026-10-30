@@ -1,0 +1,57 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "PBI: Check prerequisites",
+      "type": "shell",
+      "command": "pwsh -NoProfile -File scripts/bootstrap/Test-Prerequisites.ps1",
+      "problemMatcher": []
+    },
+    {
+      "label": "PBI: Quality gate (commit)",
+      "type": "shell",
+      "command": "pwsh -NoProfile -File scripts/quality/Invoke-PbiQualityGate.ps1 -Profile commit",
+      "problemMatcher": [],
+      "group": "test"
+    },
+    {
+      "label": "PBI: Quality gate (pull request)",
+      "type": "shell",
+      "command": "pwsh -NoProfile -File scripts/quality/Invoke-PbiQualityGate.ps1 -Profile pr -Target Local",
+      "problemMatcher": [],
+      "group": "test"
+    },
+    {
+      "label": "PBI: DAX tests against Power BI Desktop",
+      "type": "shell",
+      "command": "pwsh -NoProfile -File scripts/quality/Invoke-PbiDaxTests.ps1 -ProjectPath src/SalesStarter -Target Local",
+      "problemMatcher": [],
+      "group": "test"
+    },
+    {
+      "label": "PBI: Deploy to DEV",
+      "type": "shell",
+      "command": "pwsh -NoProfile -File scripts/deploy/Deploy-PbiProject.ps1 -Environment DEV",
+      "problemMatcher": []
+    },
+    {
+      "label": "PBI: Deploy to DEV (plan only)",
+      "type": "shell",
+      "command": "pwsh -NoProfile -File scripts/deploy/Deploy-PbiProject.ps1 -Environment DEV -WhatIf",
+      "problemMatcher": []
+    },
+    {
+      "label": "PBI: Sprint status",
+      "type": "shell",
+      "command": "pwsh -NoProfile -File scripts/sprint/Get-PbiSprintStatus.ps1",
+      "problemMatcher": []
+    },
+    {
+      "label": "PBI: Pester tests",
+      "type": "shell",
+      "command": "pwsh -NoProfile -Command \"Invoke-Pester -Path tests/powershell -Output Detailed\"",
+      "problemMatcher": [],
+      "group": "test"
+    }
+  ]
+}
